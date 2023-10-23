@@ -1,0 +1,48 @@
+// aling-items, flex-direction, flex-wrapを引数で指定することができます。
+// 初期値は、横並び、上下中央配置、改行しないですが、引数に値を渡せば変更可能です。
+@use "./media-query" as mq;
+
+// flex-box
+$flex: flex;
+@mixin start($align: center, $direction: row, $wrap: nowrap) {
+    display: $flex;
+    justify-content: start;
+    align-items: $align;
+    flex-direction: $direction;
+    flex-wrap: $wrap;
+}
+@mixin center($align: center, $direction: row, $wrap: nowrap) {
+    display: $flex;
+    justify-content: center;
+    align-items: $align;
+    flex-direction: $direction;
+    flex-wrap: $wrap;
+}
+@mixin end($align: center, $direction: row, $wrap: nowrap) {
+    display: $flex;
+    justify-content: end;
+    align-items: $align;
+    flex-direction: $direction;
+    flex-wrap: $wrap;
+}
+@mixin between($align: center, $direction: row, $wrap: nowrap) {
+    display: $flex;
+    justify-content: space-between;
+    align-items: $align;
+    flex-direction: $direction;
+    flex-wrap: $wrap;
+}
+@mixin evenly($align: center, $direction: row, $wrap: nowrap) {
+    display: $flex;
+    justify-content: space-evenly;
+    align-items: $align;
+    flex-direction: $direction;
+    flex-wrap: $wrap;
+}
+@mixin around($align: center, $direction: row, $wrap: nowrap) {
+    display: $flex;
+    justify-content: space-around;
+    align-items: $align;
+    flex-direction: $direction;
+    flex-wrap: $wrap;
+}
