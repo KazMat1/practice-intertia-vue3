@@ -10,7 +10,7 @@ use Inertia\Response;
 
 class TaskController extends Controller
 {
-    private const VIEW_DIR = "Task/";
+    private const VIEW_DIR = "Tasks/";
 
     public function index(): Response
     {
