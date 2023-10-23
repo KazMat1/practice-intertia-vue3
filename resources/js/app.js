@@ -2,6 +2,7 @@
 // import './bootstrap';
 
 // settings for interia.js and vue.js
+import "normalize.css/normalize.css";
 import { createApp, h } from 'vue'
 import { createInertiaApp } from '@inertiajs/vue3'
 
