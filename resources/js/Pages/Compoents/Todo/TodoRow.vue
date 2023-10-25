@@ -14,16 +14,17 @@ const formattedDate = ((date, format) => {
 const checked = ref(false)
 
 const props = defineProps({
+    id: Number,
     title: String,
     due_date: String,
 })
 </script>
 
 <template>
+<label :for="`todo-${props.id}`">
 <div class="todo-item" :class="{checked: checked}">
     <div class="todo-item-group">
-        <label for="todo"></label>
-        <input type="checkbox" name="todo" id="todo" v-model="checked">
+        <input type="checkbox" name="todo" :id="`todo-${props.id}`" v-model="checked">
         <p class="todo-due-date">{{ formattedDate(props.due_date, format) }}</p>
         <p class="todo-title">{{ props.title }}</p>
     </div>
@@ -36,6 +37,7 @@ const props = defineProps({
         </IconBtn>
     </div>
 </div>
+</label>
 </template>
 
 <style lang="scss">

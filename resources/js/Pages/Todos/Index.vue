@@ -24,8 +24,9 @@ const checked = ref(false)
         <div class="todo">
             <!-- start loop set -->
             <TodoRow
-                v-for="todo in todos"
-                :key="todo.id"
+                v-for="(todo, index) in todos"
+                :key="todo.index"
+                :id="todo.id"
                 :title="todo.title"
                 :due_date="todo.due_date"
             />
@@ -42,6 +43,9 @@ const checked = ref(false)
 @use "../../../scss/global/mixin/flex" as flex;
 .heading {
     text-align: center;
+    padding-top: 100px;
+    padding-bottom: 40px;
+    margin: 0px;
 }
 .todo {
     width: 100%;
