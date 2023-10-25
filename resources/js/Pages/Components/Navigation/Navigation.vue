@@ -27,10 +27,10 @@ a {
     text-decoration: none;
     color: white;
 }
-
 .container {
     width: 100vw;
-    padding: 0 4rem;
+    padding-right: 4rem;
+    padding-left: 4rem;
 
 }
 .nav-bg {
