@@ -21,12 +21,12 @@ const props = defineProps({
 </script>
 
 <template>
-<label :for="`todo-${props.id}`">
+<label :for="`todo-${id}`">
 <div class="todo-item" :class="{checked: checked}">
     <div class="todo-item-group">
-        <input type="checkbox" name="todo" :id="`todo-${props.id}`" v-model="checked">
-        <p class="todo-due-date">{{ formattedDate(props.due_date, format) }}</p>
-        <p class="todo-title">{{ props.title }}</p>
+        <input type="checkbox" name="todo" :id="`todo-${id}`" v-model="checked">
+        <p class="todo-due-date">{{ formattedDate(due_date, format) }}</p>
+        <p class="todo-title">{{ title }}</p>
     </div>
     <div class="icon-btn-group">
         <IconBtn :link="route('todos.edit')" class="icon-btn-edit">
@@ -65,5 +65,9 @@ const props = defineProps({
     &-title {
         width: auto;
     }
+}
+.checked {
+    text-decoration: line-through var.$light-black;
+    background-color: rgba($color: var.$black, $alpha: .075);
 }
 </style>

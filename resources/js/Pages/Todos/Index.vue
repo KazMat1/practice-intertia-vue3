@@ -8,24 +8,19 @@ import TodoRow from "../Compoents/Todo/TodoRow.vue";
 const props = defineProps({
     todos: Array
 });
-const checked = ref(false)
-// const format = 'MM/DD';
-// const dayjs = inject('dayjs');
-// const formattedDate = ((date, format) => {
-//     return dayjs(date).format(format)
-// });
-
+const todoNumber = props.todos.length
 </script>
 
 <template>
     <Navigation />
     <h2 class="heading">TODO List</h2>
     <main class="container">
+        <p>{{ todoNumber + ' / ' }}</p>
         <div class="todo">
             <!-- start loop set -->
             <TodoRow
                 v-for="(todo, index) in todos"
-                :key="todo.index"
+                :key="index"
                 :id="todo.id"
                 :title="todo.title"
                 :due_date="todo.due_date"
@@ -49,10 +44,6 @@ const checked = ref(false)
 }
 .todo {
     width: 100%;
-}
-.checked {
-    text-decoration: line-through var.$light-black;
-    background-color: rgba($color: var.$black, $alpha: .075);
 }
 .icon-btn-group {
     @include flex.center()
