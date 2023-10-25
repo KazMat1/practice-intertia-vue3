@@ -4,8 +4,7 @@ import { Link } from '@inertiajs/vue3';
 </script>
 
 <template>
-    <header class="container nav-bg">
-        <div class="nav">
+    <header class="container nav nav-bg">
             <div class="nav-brand">
                 <Link :href="route('top')">Apps</Link>
             </div>
@@ -14,7 +13,6 @@ import { Link } from '@inertiajs/vue3';
                 <li class="nav-item">item2</li>
                 <li class="nav-item">item3</li>
             </ul>
-        </div>
     </header>
 </template>
 
@@ -39,8 +37,12 @@ a {
     background-color: var.$light-black;
 }
 .nav {
+    width: 100%;
+    height: 60px;
     @include flex.between();
-    padding: 1rem 0;
+    position: fixed;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
     color: var.$white;
     &-list {
         @include flex.start();

@@ -11,7 +11,7 @@ import { Link } from '@inertiajs/vue3';
 @use "../../../../scss/global/mixin/flex" as flex;
 
 .floated {
-    position: absolute;
+    position: fixed;
     right: 4rem;
     bottom: 4rem;
 }
