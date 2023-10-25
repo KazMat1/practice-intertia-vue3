@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -19,6 +20,7 @@ class TaskFactory extends Factory
         return [
             //
             'title' => $this->faker->word(),
+            'due_date' => Carbon::now()->addDays(random_int(1, 100))
         ];
     }
 }

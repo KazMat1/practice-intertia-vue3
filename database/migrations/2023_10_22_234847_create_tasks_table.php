@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('tasks', function (Blueprint $table) {
             $table->id();
             $table->string('title', 20);
+            $table->date('due_date');
             $table->timestamps();
 
             $table->softDeletes();
