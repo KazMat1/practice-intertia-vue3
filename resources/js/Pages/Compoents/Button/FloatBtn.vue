@@ -3,7 +3,7 @@ import { Link } from '@inertiajs/vue3';
 </script>
 
 <template>
-    <Link :href="route('tasks.create')" class="floated float-btn rounded-full"  as="button" >+</Link>
+    <Link :href="route('todos.create')" class="floated float-btn rounded-full"  as="button" >+</Link>
 </template>
 
 <style lang="scss">

@@ -10,7 +10,7 @@ import { Link } from '@inertiajs/vue3';
                 <Link :href="route('top')">Apps</Link>
             </div>
             <ul class="nav-list">
-                <li class="nav-item"><Link :href="route('tasks.index')">Todo List</Link></li>
+                <li class="nav-item"><Link :href="route('todos.index')">Todo List</Link></li>
                 <li class="nav-item">item2</li>
                 <li class="nav-item">item3</li>
             </ul>

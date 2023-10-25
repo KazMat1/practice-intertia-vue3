@@ -8,16 +8,16 @@ use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
 use Inertia\Response;
 
-use App\Models\Task;
+use App\Models\Todo;
 
-class TaskController extends Controller
+class TodoController extends Controller
 {
-    private const VIEW_DIR = "Tasks/";
+    private const VIEW_DIR = "Todos/";
 
     public function index(): Response
     {
-        $tasks = Task::all();
-        return Inertia::render(self::VIEW_DIR . 'Index', compact('tasks'));
+        $todos = Todo::all();
+        return Inertia::render(self::VIEW_DIR . 'Index', compact('todos'));
     }
 
     public function create(): Response
@@ -27,7 +27,7 @@ class TaskController extends Controller
 
     public function store(): RedirectResponse
     {
-        return redirect()->route('tasks.create');
+        return redirect()->route('todos.create');
     }
 
     public function edit(): Response
@@ -37,11 +37,11 @@ class TaskController extends Controller
 
     public function update(): RedirectResponse
     {
-        return redirect()->route('tasks.store');
+        return redirect()->route('todos.store');
     }
 
     public function destroy(): RedirectResponse
     {
-        return redirect()->route('tasks.index');
+        return redirect()->route('todos.index');
     }
 }

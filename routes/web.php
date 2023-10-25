@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\TaskController;
+use App\Http\Controllers\TodoController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -19,11 +19,11 @@ Route::get('/', function () {
     return Inertia::render('hello-world');
 })->name('top');
 
-Route::controller(TaskController::class)
-    ->prefix('tasks/')
-    ->name('tasks.')
+Route::controller(TodoController::class)
+    ->prefix('todos/')
+    ->name('todos.')
     ->group(function () {
-        // /tasks/*, route('tasks.*')
+        // /todos/*, route('todos.*')
         Route::get('', 'index')->name('index');
         Route::get('create', 'create')->name('create');
         Route::post('store', 'store')->name('store');
