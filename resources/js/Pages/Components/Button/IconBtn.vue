@@ -8,7 +8,7 @@ const props = defineProps({
 
 <template>
     <Link :href="link" class="icon-btn" :class="$attrs.class">
-        <slot></slot>
+        <slot />
     </Link>
 </template>
 

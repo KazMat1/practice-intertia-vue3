@@ -1,8 +1,8 @@
 <script setup>
 import { inject, ref } from 'vue';
-import IconBtn from '../Button/IconBtn.vue';
-import DeleteIcon from '../Icon/DeleteIcon.vue';
-import EditIcon from '../Icon/EditIcon.vue';
+import IconBtn from '@/Pages/Components/Button/IconBtn.vue';
+import DeleteIcon from '@/Pages/Components/Icon/DeleteIcon.vue';
+import EditIcon from '@/Pages/Components/Icon/EditIcon.vue';
 
 // util的なメソッドをどこに置くかわからなかったので、ひとまずここに書いておく
 const format = 'MM/DD';
