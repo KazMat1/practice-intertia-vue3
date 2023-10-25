@@ -17,7 +17,7 @@ use Inertia\Inertia;
 
 Route::get('/', function () {
     return Inertia::render('hello-world');
-});
+})->name('top');
 
 Route::group([
     'prefix' => 'tasks/',
