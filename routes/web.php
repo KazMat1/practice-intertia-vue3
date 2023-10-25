@@ -19,15 +19,15 @@ Route::get('/', function () {
     return Inertia::render('hello-world');
 })->name('top');
 
-Route::group([
-    'prefix' => 'tasks/',
-    'as' => 'tasks.',
-], function () {
-    // /tasks/*, route('tasks.*')
-    Route::get('', [TaskController::class, 'index'])->name('index');
-    Route::get('create', [TaskController::class, 'create'])->name('create');
-    Route::post('store', [TaskController::class, 'store'])->name('store');
-    Route::get('edit', [TaskController::class, 'edit'])->name('edit');
-    Route::put('update', [TaskController::class, 'update'])->name('update');
-    Route::delete('destroy', [TaskController::class, 'destroy'])->name('destroy');
+Route::controller(TaskController::class)
+    ->prefix('tasks/')
+    ->name('tasks.')
+    ->group(function () {
+        // /tasks/*, route('tasks.*')
+        Route::get('', 'index')->name('index');
+        Route::get('create', 'create')->name('create');
+        Route::post('store', 'store')->name('store');
+        Route::get('edit', 'edit')->name('edit');
+        Route::put('update', 'update')->name('update');
+        Route::delete('destroy', 'destroy')->name('destroy');
 });
