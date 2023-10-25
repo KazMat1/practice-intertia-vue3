@@ -2,12 +2,15 @@
 import { Link } from "@inertiajs/vue3";
 import Navigation from "../Compoents/Navigation/Navigation.vue";
 import FloatBtn from "../Compoents/Button/FloatBtn.vue"
-import { computed, inject } from "vue";
+import { computed, inject, ref } from "vue";
+import EditIcon from "../Compoents/Icon/EditIcon.vue";
+import DeleteIcon from "../Compoents/Icon/DeleteIconBefore.vue";
+import IconButton from "../Compoents/Button/IconButton.vue";
 
 const props = defineProps({
     tasks: Array
 });
-
+const checked = ref(false)
 const dayjs = inject('dayjs')
 const formattedDate = ((date) => {
     const format = 'MM/DD'
@@ -21,20 +24,19 @@ const formattedDate = ((date) => {
     <main class="container">
         <div class="todo">
             <!-- start loop set -->
-
-            <div v-for="task in tasks" class="todo-item">
+            <div v-for="task in tasks" class="todo-item" :class="{checked: checked}" :key="task.id">
                 <div class="todo-item-group">
-                    <input type="checkbox" name="todo" id="">
+                    <input type="checkbox" name="todo" id="" v-model="checked">
                     <p class="todo-due-date">{{ formattedDate(task.due_date) }}</p>
                     <p class="todo-title">{{ task.title }}</p>
                 </div>
-                <div class="btn-group">
-                    <Link :href="route('tasks.edit')" class="icon-btn icon-btn-edit">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>pencil</title><path d="M20.71,7.04C21.1,6.65 21.1,6 20.71,5.63L18.37,3.29C18,2.9 17.35,2.9 16.96,3.29L15.12,5.12L18.87,8.87M3,17.25V21H6.75L17.81,9.93L14.06,6.18L3,17.25Z" /></svg>
-                    </Link>
-                    <Link :href="route('tasks.destroy')" class="icon-btn icon-btn-delete">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>trash-can-outline</title><path d="M9,3V4H4V6H5V19A2,2 0 0,0 7,21H17A2,2 0 0,0 19,19V6H20V4H15V3H9M7,6H17V19H7V6M9,8V17H11V8H9M13,8V17H15V8H13Z" /></svg>
-                    </Link>
+                <div class="icon-btn-group">
+                    <IconButton :link="route('tasks.edit')" class="icon-btn-edit">
+                        <EditIcon />
+                    </IconButton>
+                    <IconButton :link="route('tasks.destroy')" class="icon-btn-delete">
+                        <DeleteIcon />
+                    </IconButton>
                 </div>
             </div>
             <!-- end loop set -->
@@ -45,7 +47,7 @@ const formattedDate = ((date) => {
                     <p class="todo-due-date">10/23</p>
                     <p class="todo-title">ああああああああああああああああああああああああああああああああああああああああああああああああああ</p>
                 </div>
-                <div class="btn-group">
+                <div class="icon-btn-group">
                     <Link :href="route('tasks.edit')" class="icon-btn icon-btn-edit">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>pencil</title><path d="M20.71,7.04C21.1,6.65 21.1,6 20.71,5.63L18.37,3.29C18,2.9 17.35,2.9 16.96,3.29L15.12,5.12L18.87,8.87M3,17.25V21H6.75L17.81,9.93L14.06,6.18L3,17.25Z" /></svg>
                     </Link>
@@ -96,23 +98,7 @@ const formattedDate = ((date) => {
     text-decoration: line-through var.$light-black;
     background-color: rgba($color: var.$black, $alpha: .075);
 }
-
-.icon-btn {
-    display: inline-block;
-    width: 1.25em;
-    height: 1.25em;
-    margin-right: 1em;
-    &-group {
-        @include flex.center()
-    }
-    &-edit {
-        color: var.$blue;
-    }
-    &-delete {
-        color: var.$red;
-    }
-    & > svg {
-        fill: currentColor;
-    }
+.icon-btn-group {
+    @include flex.center()
 }
 </style>
