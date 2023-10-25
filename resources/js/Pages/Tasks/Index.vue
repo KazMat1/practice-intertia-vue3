@@ -2,10 +2,17 @@
 import { Link } from "@inertiajs/vue3";
 import Navigation from "../Compoents/Navigation/Navigation.vue";
 import FloatBtn from "../Compoents/Button/FloatBtn.vue"
+import { computed, inject } from "vue";
 
 const props = defineProps({
-    message: String,
+    tasks: Array
 });
+
+const dayjs = inject('dayjs')
+const formattedDate = ((date) => {
+    const format = 'MM/DD'
+    return dayjs(date).format(format)
+})
 </script>
 
 <template>
@@ -14,11 +21,12 @@ const props = defineProps({
     <main class="container">
         <div class="todo">
             <!-- start loop set -->
-            <div class="todo-item">
+
+            <div v-for="task in tasks" class="todo-item">
                 <div class="todo-item-group">
                     <input type="checkbox" name="todo" id="">
-                    <p class="todo-due-date">10/23</p>
-                    <p class="todo-title">{{ message }}</p>
+                    <p class="todo-due-date">{{ formattedDate(task.due_date) }}</p>
+                    <p class="todo-title">{{ task.title }}</p>
                 </div>
                 <div class="btn-group">
                     <Link :href="route('tasks.edit')" class="icon-btn icon-btn-edit">
@@ -49,7 +57,7 @@ const props = defineProps({
             <!-- end loop set -->
         </div>
         <p>static message: message from Index.vue</p>
-        <p>dynamic message: {{ message }}</p>
+        <p>dynamic message: </p>
 
         <FloatBtn />
     </main>

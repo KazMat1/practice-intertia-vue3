@@ -17,10 +17,10 @@ class Task extends Model
         'due_date',
     ];
 
-    protected function deadline(): Attribute
-    {
-        return Attribute::make(
-            get: fn ($value) => Carbon::now($value)->format("m/d"),
-        );
-    }
+    // protected function deadline(): Attribute
+    // {
+    //     return Attribute::make(
+    //         get: fn ($value) => Carbon::now($value)->format("m/d"),
+    //     );
+    // }
 }

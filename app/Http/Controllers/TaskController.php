@@ -8,13 +8,16 @@ use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
 use Inertia\Response;
 
+use App\Models\Task;
+
 class TaskController extends Controller
 {
     private const VIEW_DIR = "Tasks/";
 
     public function index(): Response
     {
-        return Inertia::render(self::VIEW_DIR . 'Index', ['message' => 'message from index method']);
+        $tasks = Task::all();
+        return Inertia::render(self::VIEW_DIR . 'Index', compact('tasks'));
     }
 
     public function create(): Response
