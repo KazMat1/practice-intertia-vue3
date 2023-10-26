@@ -31,11 +31,11 @@ const todoCheckedNum = computed(() => {
     return filteredTodos.value.filter((todo) => todo.is_completed === 1).length
 })
 
-const updateChecked = (id) => {
-    console.log(`id: ${id}のTODOがチェックされました`)
-    console.log(`id: ${id}`)
-    tmpTodos.value[id].is_completed = !tmpTodos.value[id].is_completed
-}
+// const updateChecked = (id) => {
+//     console.log(`id: ${id}のTODOがチェックされました`)
+//     console.log(`id: ${id}`)
+//     tmpTodos.value[id].is_completed = !tmpTodos.value[id].is_completed
+// }
 
 </script>
 
@@ -45,13 +45,6 @@ const updateChecked = (id) => {
         <main class="container">
             <span>{{ todoCheckedNum + " / " + todoNum }}</span>
             <input type="text" name="query" v-model="query" />
-            <!-- <Link
-                as="button"
-                method="get"
-                :href="route('todos.search', { query: query })"
-                preserve-state
-                >検索</Link
-            > -->
             <Link as="button" method="get" :href="route('todos.index')"
                 >リセット</Link
             >
@@ -60,15 +53,9 @@ const updateChecked = (id) => {
                 <div class="todo-item">
                     <div class="todo-item-group">
                         <label for="todos"></label>
-                        <!-- <input
-                            type="checkbox"
-                            name="todo"
-                            id="todos"
-                            v-model="isCheckedAllTodos"
-                            @change="toggleAllTodos"
-                        /> -->
                         <input
                             type="checkbox"
+                            id="todos"
                         />
                         <p class="todo-due-date">期限</p>
                         <p class="todo-title">タイトル</p>
@@ -85,12 +72,6 @@ const updateChecked = (id) => {
                         :is_completed="todo.is_completed"
                         @toggleChecked="updateChecked"
                     />
-                    <!-- <li v-for="(todo,index) in filteredTodos" :key="index" style="list-style: none;">
-                        <label :for="`todo-${todo.id}`">
-                            <input type="checkbox" name="" :id="`todo-${todo.id}`" :checked="todo.is_completed ? true : false">
-                            {{ todo.title }}
-                        </label>
-                    </li> -->
                 </template>
                 <template v-else>
                     <p>Todoがありません</p>
