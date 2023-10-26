@@ -11,20 +11,29 @@ const formattedDate = ((date, format) => {
     return dayjs(date).format(format)
 });
 
-const checked = ref(false)
 
 const props = defineProps({
     id: Number,
     title: String,
     due_date: String,
+    is_completed: Number
 })
+
+const checked = ref(props.is_completed ? true : false)
+
+// const emit = defineEmits(['toggleChecked'])
+
+// const handleChange = () => {
+//     emit('toggleChecked', props.id)
+//     // console.log(props.id, props.is_completed, checked)
+// }
 </script>
 
 <template>
 <label :for="`todo-${id}`">
 <div class="todo-item" :class="{checked: checked}">
     <div class="todo-item-group">
-        <input type="checkbox" name="todo" :id="`todo-${id}`" v-model="checked">
+        <input type="checkbox" name="todo" :id="`todo-${id}`" v-model="checked" @change="handleChange">
         <p class="todo-due-date">{{ formattedDate(due_date, format) }}</p>
         <p class="todo-title">{{ title }}</p>
     </div>

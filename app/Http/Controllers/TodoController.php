@@ -44,4 +44,10 @@ class TodoController extends Controller
     {
         return redirect()->route('todos.index');
     }
+    // public function search(string $query): Response
+    // {
+    //     $todos = Todo::where('title', 'like', '%'.$query.'%')->get();
+
+    //     return Inertia::render(self::VIEW_DIR . 'Index', compact('todos'));
+    // }
 }

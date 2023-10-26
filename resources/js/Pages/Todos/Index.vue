@@ -1,49 +1,101 @@
 <script>
 export default {
     mounted: () => {
-        document.title = "Todo List"
-    }
-}
+        document.title = "Todo List";
+    },
+};
 </script>
 
 <script setup>
 import FloatBtn from "@/Pages/Components/Button/FloatBtn.vue";
 import TodoRow from "@/Pages/Components/Todo/TodoRow.vue";
+import Heading from "../Components/Heading.vue";
+import { computed, ref } from "vue";
+import { Link } from "@inertiajs/vue3";
 
 const props = defineProps({
     todos: Array,
 });
+
+const tmpTodos = ref(props.todos)
+
+const query = ref('');
+const filteredTodos = computed(() => {
+    const lowerQuery = query.value.toLowerCase()
+    return tmpTodos.value.filter(todo => todo.title.toLowerCase().includes(lowerQuery))
+})
+const todoNum = computed(() => {
+    return filteredTodos.value.length
+})
+const todoCheckedNum = computed(() => {
+    return filteredTodos.value.filter((todo) => todo.is_completed === 1).length
+})
+
+const updateChecked = (id) => {
+    console.log(`id: ${id}のTODOがチェックされました`)
+    console.log(`id: ${id}`)
+    tmpTodos.value[id].is_completed = !tmpTodos.value[id].is_completed
+}
+
 </script>
 
 <template>
     <Layout>
+        <Heading text="Todo List" />
         <main class="container">
-        <h2 class="heading">Todo List</h2>
-            <p>{{ " / " + todos.length }}</p>
+            <span>{{ todoCheckedNum + " / " + todoNum }}</span>
+            <input type="text" name="query" v-model="query" />
+            <!-- <Link
+                as="button"
+                method="get"
+                :href="route('todos.search', { query: query })"
+                preserve-state
+                >検索</Link
+            > -->
+            <Link as="button" method="get" :href="route('todos.index')"
+                >リセット</Link
+            >
             <div class="todo">
                 <!-- todo heading -->
                 <div class="todo-item">
                     <div class="todo-item-group">
                         <label for="todos"></label>
-                        <input type="checkbox" name="todo" id="todos" v-model="checked">
+                        <!-- <input
+                            type="checkbox"
+                            name="todo"
+                            id="todos"
+                            v-model="isCheckedAllTodos"
+                            @change="toggleAllTodos"
+                        /> -->
+                        <input
+                            type="checkbox"
+                        />
                         <p class="todo-due-date">期限</p>
                         <p class="todo-title">タイトル</p>
                     </div>
                     <div class="icon-btn-group">操作</div>
                 </div>
-                <!-- start loop set -->
-                <TodoRow
-                    v-for="(todo, index) in todos"
-                    :key="index"
-                    :id="todo.id"
-                    :title="todo.title"
-                    :due_date="todo.due_date"
-                />
-                <!-- end loop set -->
+                <template v-if="todoNum">
+                    <TodoRow
+                        v-for="(todo) in filteredTodos"
+                        :key="todo.id"
+                        :id="todo.id"
+                        :title="todo.title"
+                        :due_date="todo.due_date"
+                        :is_completed="todo.is_completed"
+                        @toggleChecked="updateChecked"
+                    />
+                    <!-- <li v-for="(todo,index) in filteredTodos" :key="index" style="list-style: none;">
+                        <label :for="`todo-${todo.id}`">
+                            <input type="checkbox" name="" :id="`todo-${todo.id}`" :checked="todo.is_completed ? true : false">
+                            {{ todo.title }}
+                        </label>
+                    </li> -->
+                </template>
+                <template v-else>
+                    <p>Todoがありません</p>
+                </template>
             </div>
-            <p>static message: message from Index.vue</p>
-            <p>dynamic message:</p>
-
             <FloatBtn />
         </main>
     </Layout>
@@ -51,15 +103,6 @@ const props = defineProps({
 <style lang="scss">
 @use "../../../scss/global/constants/variable" as var;
 @use "../../../scss/global/mixin/flex" as flex;
-main {
-    padding-top: 60px;
-}
-.heading {
-    text-align: center;
-    padding-top: 40px;
-    padding-bottom: 40px;
-    margin: 0px;
-}
 .todo {
     width: 100%;
 }

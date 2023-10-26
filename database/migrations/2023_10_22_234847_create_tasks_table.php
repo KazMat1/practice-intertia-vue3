@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('title', 20);
             $table->date('due_date');
+            $table->boolean('is_completed');
             $table->timestamps();
 
             $table->softDeletes();
