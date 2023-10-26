@@ -22,7 +22,7 @@ class TodoController extends Controller
 
     public function create(): Response
     {
-        return Inertia::render(self::VIEW_DIR . 'Create', ['message' => 'message from create method']);
+        return Inertia::render(self::VIEW_DIR . 'Create');
     }
 
     public function store(): RedirectResponse

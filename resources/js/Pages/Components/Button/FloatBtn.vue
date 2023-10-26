@@ -3,7 +3,7 @@ import { Link } from '@inertiajs/vue3';
 </script>
 
 <template>
-    <Link :href="route('todos.create')" class="floated float-btn rounded-full"  as="button" >+</Link>
+    <Link :href="route('todos.create')" class="floated btn-float rounded-full"  as="button" >+</Link>
 </template>
 
 <style lang="scss">
@@ -15,17 +15,19 @@ import { Link } from '@inertiajs/vue3';
     right: 4rem;
     bottom: 4rem;
 }
-.float-btn {
-    color: var.$white;
-    font-size: 30px;
-    width: 80px;
-    height: 80px;
-    cursor: pointer;
-    box-shadow: 0px 5px 20px 0px rgba($color: var.$light-black, $alpha: .35);
-    background-color: rgba($color: var.$blue, $alpha: .9);
-        a {
-            color: var.$white;
+.btn {
+    &-float {
+        width: 80px;
+        height: 80px;
+        color: var.$white;
+        cursor: pointer;
+        font-size: 30px;
+        box-shadow: 0px 5px 20px 0px rgba($color: var.$light-black, $alpha: .40);
+        background-color: var.$light-blue;
+        &:hover {
+            background-color: var.$blue;
         }
+    }
 }
 .rounded-full {
     border-radius: 50%;

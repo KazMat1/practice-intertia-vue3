@@ -9,7 +9,7 @@ export default {
 <script setup>
 import FloatBtn from "@/Pages/Components/Button/FloatBtn.vue";
 import TodoRow from "@/Pages/Components/Todo/TodoRow.vue";
-import Heading from "../Components/Heading.vue";
+import Heading from "@/Pages/Components/Heading.vue"
 import { computed, ref } from "vue";
 import { Link } from "@inertiajs/vue3";
 
@@ -40,46 +40,44 @@ const todoCheckedNum = computed(() => {
 </script>
 
 <template>
-    <Layout>
-        <Heading text="Todo List" />
-        <main class="container">
-            <span>{{ todoCheckedNum + " / " + todoNum }}</span>
-            <input type="text" name="query" v-model="query" />
-            <Link as="button" method="get" :href="route('todos.index')"
-                >リセット</Link
-            >
-            <div class="todo">
-                <!-- todo heading -->
-                <div class="todo-item">
-                    <div class="todo-item-group">
-                        <label for="todos"></label>
-                        <input
-                            type="checkbox"
-                            id="todos"
-                        />
-                        <p class="todo-due-date">期限</p>
-                        <p class="todo-title">タイトル</p>
-                    </div>
-                    <div class="icon-btn-group">操作</div>
-                </div>
-                <template v-if="todoNum">
-                    <TodoRow
-                        v-for="(todo) in filteredTodos"
-                        :key="todo.id"
-                        :id="todo.id"
-                        :title="todo.title"
-                        :due_date="todo.due_date"
-                        :is_completed="todo.is_completed"
-                        @toggleChecked="updateChecked"
+    <Heading text="Todo List" />
+    <main class="container">
+        <span>{{ todoCheckedNum + " / " + todoNum }}</span>
+        <input type="text" name="query" v-model="query" />
+        <Link as="button" method="get" :href="route('todos.index')"
+            >リセット</Link
+        >
+        <div class="todo">
+            <!-- todo heading -->
+            <div class="todo-item">
+                <div class="todo-item-group">
+                    <label for="todos"></label>
+                    <input
+                        type="checkbox"
+                        id="todos"
                     />
-                </template>
-                <template v-else>
-                    <p>Todoがありません</p>
-                </template>
+                    <p class="todo-due-date">期限</p>
+                    <p class="todo-title">タイトル</p>
+                </div>
+                <div class="icon-btn-group">操作</div>
             </div>
-            <FloatBtn />
-        </main>
-    </Layout>
+            <template v-if="todoNum">
+                <TodoRow
+                    v-for="(todo) in filteredTodos"
+                    :key="todo.id"
+                    :id="todo.id"
+                    :title="todo.title"
+                    :due_date="todo.due_date"
+                    :is_completed="todo.is_completed"
+                    @toggleChecked="updateChecked"
+                />
+            </template>
+            <template v-else>
+                <p>Todoがありません</p>
+            </template>
+        </div>
+        <FloatBtn />
+    </main>
 </template>
 <style lang="scss">
 @use "../../../scss/global/constants/variable" as var;
