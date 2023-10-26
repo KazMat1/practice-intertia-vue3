@@ -8,7 +8,9 @@
     "devDependencies": {
         "@vitejs/plugin-vue": "^4.4.0",
         "axios": "^1.1.2",
+        "dayjs": "^1.11.10",
         "laravel-vite-plugin": "^0.8.0",
+        "normalize.css": "^8.0.1",
         "sass": "^1.69.4",
         "vite": "^4.0.0",
         "vue": "^3.3.4"

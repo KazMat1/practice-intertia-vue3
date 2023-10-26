@@ -8,7 +8,7 @@ const props = defineProps({
 </script>
 
 <template>
-    <Link :href="route('tasks.index')">Index</Link>
+    <Link :href="route('todos.index')">Index</Link>
     <p>static message: message from  Create.vue</p>
     <p>dynamic message: {{ message }}</p>
 </template>

@@ -11,9 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('tasks', function (Blueprint $table) {
+        Schema::create('todos', function (Blueprint $table) {
             $table->id();
             $table->string('title', 20);
+            $table->date('due_date');
+            $table->boolean('is_completed');
             $table->timestamps();
 
             $table->softDeletes();

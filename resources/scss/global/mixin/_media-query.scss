@@ -1,0 +1,22 @@
+// メディアクエリを定義します。
+@use "../constants/variable" as v;
+
+// media query(mobile first)
+@mixin sp {
+    @media screen and (min-width: (v.$sp)) {
+      //　画面サイズが480pxからはここを読み込む
+      @content;
+    }
+}
+@mixin tablet {
+    @media screen and (min-width: (v.$tablet)) and (max-width: (v.$pc)) {
+        // 画面サイズが768pxから1024pxまではここを読み込む
+        @content;
+    }
+}
+@mixin pc {
+    @media screen and (min-width: (v.$pc)) {
+        // 画面サイズが1024pxからはここを読み込む
+        @content;
+    }
+}

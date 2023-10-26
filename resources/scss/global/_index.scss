@@ -1,0 +1,4 @@
+// 同階層のディレクトリを@forwardで読み込みます
+// グローバルな変数や関数をこのディレクトリにまとめております
+@forward "constants";
+@forward "mixin";
