@@ -5,7 +5,7 @@ import DeleteIcon from '@/Pages/Components/Icon/DeleteIcon.vue';
 import EditIcon from '@/Pages/Components/Icon/EditIcon.vue';
 
 // util的なメソッドをどこに置くかわからなかったので、ひとまずここに書いておく
-const format = 'MM/DD';
+const format = 'M/D';
 const dayjs = inject('dayjs');
 const formattedDate = ((date, format) => {
     return dayjs(date).format(format)
