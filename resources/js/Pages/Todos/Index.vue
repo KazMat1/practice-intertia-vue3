@@ -11,11 +11,12 @@ import FloatBtn from "@/Pages/Components/Button/FloatBtn.vue";
 import TodoRow from "@/Pages/Components/Todo/TodoRow.vue";
 import Heading from "@/Pages/Components/Heading.vue"
 import { computed, ref } from "vue";
-import { Link } from "@inertiajs/vue3";
+import { Link, usePage } from "@inertiajs/vue3";
 
 const props = defineProps({
     todos: Array,
 });
+const page = usePage();
 
 const tmpTodos = ref(props.todos)
 
@@ -42,6 +43,7 @@ const todoCheckedNum = computed(() => {
 <template>
     <Heading text="Todo List" />
     <main class="container">
+        <div v-if="page.props.flash.message" class="flash flash-success">{{ page.props.flash.message }}<span>×</span></div>
         <span>{{ todoCheckedNum + " / " + todoNum }}</span>
         <input type="text" name="query" v-model="query" />
         <Link as="button" method="get" :href="route('todos.index')"
@@ -87,5 +89,14 @@ const todoCheckedNum = computed(() => {
 }
 .icon-btn-group {
     @include flex.center();
+}
+.flash {
+    width: 100%;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    @include flex.between();
+    &-success {
+        background-color: var.$green;
+    }
 }
 </style>

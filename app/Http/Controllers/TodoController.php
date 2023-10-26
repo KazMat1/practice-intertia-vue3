@@ -25,9 +25,16 @@ class TodoController extends Controller
         return Inertia::render(self::VIEW_DIR . 'Create');
     }
 
-    public function store(): RedirectResponse
+    public function store(Request $request): RedirectResponse
     {
-        return redirect()->route('todos.create');
+        $rule = [
+            'title' => 'required|string|max:20',
+            'due_date' => 'required|date|after_or_equal:today',
+        ];
+        $request->validate($rule);
+        Todo::create($request->all());
+
+        return to_route('todos.index')->with('message', '追加しました');
     }
 
     public function edit(): Response
