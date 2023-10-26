@@ -47,9 +47,10 @@ class TodoController extends Controller
         return redirect()->route('todos.store');
     }
 
-    public function destroy(): RedirectResponse
+    public function destroy($id): RedirectResponse
     {
-        return redirect()->route('todos.index');
+        Todo::destroy($id);
+        return to_route('todos.index')->with('message', '削除しました');
     }
     // public function search(string $query): Response
     // {

@@ -2,12 +2,16 @@
 import { Link } from '@inertiajs/vue3';
 
 const props = defineProps({
-    link: String
+    url: String,
+    method: {
+        type: String,
+        default: 'get'
+    }
 })
 </script>
 
 <template>
-    <Link :href="link" class="icon-btn" :class="$attrs.class">
+    <Link :href="url" :method="method" class="icon-btn" :class="$attrs.class">
         <slot />
     </Link>
 </template>
