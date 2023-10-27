@@ -18,26 +18,17 @@ const props = defineProps({
 });
 const page = usePage();
 
-const tmpTodos = ref(props.todos)
-
 const query = ref('');
-const filteredTodos = computed(() => {
-    const lowerQuery = query.value.toLowerCase()
-    return tmpTodos.value.filter(todo => todo.title.toLowerCase().includes(lowerQuery))
-})
-const todoNum = computed(() => {
-    return filteredTodos.value.length
-})
+// フロントで検索すると、削除時の挙動がおかしかったため、バックに投げて検索しておく
+// const tmpTodos = ref(props.todos)
+// const filteredTodos = computed(() => {
+//     const lowerQuery = query.value.toLowerCase()
+//     return tmpTodos.value.filter(todo => todo.title.toLowerCase().includes(lowerQuery))
+// })
+const todoNum  = (props.todos.length)
 const todoCheckedNum = computed(() => {
-    return filteredTodos.value.filter((todo) => todo.is_completed === 1).length
+    return props.todos.filter((todo) => todo.is_completed === 1).length
 })
-
-// const updateChecked = (id) => {
-//     console.log(`id: ${id}のTODOがチェックされました`)
-//     console.log(`id: ${id}`)
-//     tmpTodos.value[id].is_completed = !tmpTodos.value[id].is_completed
-// }
-
 </script>
 
 <template>
@@ -46,9 +37,8 @@ const todoCheckedNum = computed(() => {
         <div v-if="page.props.flash.message" class="flash flash-success">{{ page.props.flash.message }}<span>×</span></div>
         <span>{{ todoCheckedNum + " / " + todoNum }}</span>
         <input type="text" name="query" v-model="query" />
-        <Link as="button" method="get" :href="route('todos.index')"
-            >リセット</Link
-        >
+        <Link as="button" method="get" :href="route('todos.search', {query: query})" preserve-state>検索</Link>
+        <Link as="button" method="get" :href="route('todos.index')">リセット</Link>
         <div class="todo">
             <!-- todo heading -->
             <div class="todo-item">
@@ -65,7 +55,7 @@ const todoCheckedNum = computed(() => {
             </div>
             <template v-if="todoNum">
                 <TodoRow
-                    v-for="(todo) in filteredTodos"
+                    v-for="(todo) in todos"
                     :key="todo.id"
                     :id="todo.id"
                     :title="todo.title"

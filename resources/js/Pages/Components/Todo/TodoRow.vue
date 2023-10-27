@@ -41,7 +41,7 @@ const checked = ref(props.is_completed ? true : false)
         <IconBtn :url="route('todos.edit')" class="icon-btn-edit">
             <EditIcon />
         </IconBtn>
-        <IconBtn :url="route('todos.destroy', id)" method="delete" class="icon-btn-delete">
+        <IconBtn :url="route('todos.destroy', id)" method="delete" class="icon-btn-delete" preserve-scroll>
             <DeleteIcon />
         </IconBtn>
     </div>
