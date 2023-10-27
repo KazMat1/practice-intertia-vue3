@@ -30,5 +30,5 @@ Route::controller(TodoController::class)
         // Route::get('{query}', 'search')->where('query', '.*')->name('search');
         Route::get('edit', 'edit')->name('edit');
         Route::put('update', 'update')->name('update');
-        Route::delete('destroy/{id}', 'destroy')->name('destroy');
+        Route::delete('destroy/{todo}', 'destroy')->name('destroy');
 });
