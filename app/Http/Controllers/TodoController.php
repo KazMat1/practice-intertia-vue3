@@ -9,6 +9,7 @@ use Inertia\Inertia;
 use Inertia\Response;
 
 use App\Models\Todo;
+use App\Http\Requests\StoreTodoRequest;
 
 class TodoController extends Controller
 {
@@ -25,13 +26,9 @@ class TodoController extends Controller
         return Inertia::render(self::VIEW_DIR . 'Create');
     }
 
-    public function store(Request $request): RedirectResponse
+    public function store(StoreTodoRequest $request): RedirectResponse
     {
-        $rule = [
-            'title' => 'required|string|max:20',
-            'due_date' => 'required|date|after_or_equal:today',
-        ];
-        $request->validate($rule);
+        // dd($request);
         Todo::create($request->all());
 
         return to_route('todos.index')->with('message', '追加しました');
@@ -47,7 +44,7 @@ class TodoController extends Controller
         return redirect()->route('todos.store');
     }
 
-    public function destroy($id): RedirectResponse
+    public function destroy(int $id): RedirectResponse
     {
         Todo::destroy($id);
         return to_route('todos.index')->with('message', '削除しました');
