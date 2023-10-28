@@ -3,12 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Redirect;
-use Inertia\Inertia;
 use Inertia\Response;
 
 use App\Models\Todo;
+use App\Http\Requests\StoreTodoRequest;
 
 class TodoController extends Controller
 {
@@ -17,22 +15,32 @@ class TodoController extends Controller
     public function index(): Response
     {
         $todos = Todo::all();
-        return Inertia::render(self::VIEW_DIR . 'Index', compact('todos'));
+        return inertia(self::VIEW_DIR . 'Index', compact('todos'));
     }
 
     public function create(): Response
     {
-        return Inertia::render(self::VIEW_DIR . 'Create', ['message' => 'message from create method']);
+        return inertia(self::VIEW_DIR . 'Create');
     }
 
-    public function store(): RedirectResponse
+    public function store(Todo $todo, StoreTodoRequest $request): RedirectResponse
     {
-        return redirect()->route('todos.create');
+        $result = $todo->fill($request->all())->save();
+        if ($result) {
+            $status = 'success';
+            $message = '登録が完了しました';
+        } else {
+            $status = 'error';
+            $message = '登録に失敗しました。もう一度お試しください';
+        }
+        $flash_message = ['status' => $status, 'message' => $message];
+
+        return to_route('todos.index')->with($flash_message);
     }
 
     public function edit(): Response
     {
-        return Inertia::render(self::VIEW_DIR . 'Edit', ['message' => 'message from edit method']);
+        return inertia(self::VIEW_DIR . 'Edit', ['message' => 'message from edit method']);
     }
 
     public function update(): RedirectResponse
@@ -40,14 +48,25 @@ class TodoController extends Controller
         return redirect()->route('todos.store');
     }
 
-    public function destroy(): RedirectResponse
+    public function destroy(Todo $todo): RedirectResponse
     {
-        return redirect()->route('todos.index');
-    }
-    // public function search(string $query): Response
-    // {
-    //     $todos = Todo::where('title', 'like', '%'.$query.'%')->get();
+        $result = $todo->delete();
+        if ($result) {
+            $status = 'success';
+            $message = '削除が完了しました';
+        } else {
+            $status = 'error';
+            $message = '削除に失敗しました。もう一度お試しください';
+        }
+        $flash_message = ['status' => $status, 'message' => $message];
 
-    //     return Inertia::render(self::VIEW_DIR . 'Index', compact('todos'));
-    // }
+        return to_route('todos.index')->with($flash_message);
+    }
+
+    public function search(string $query): Response
+    {
+        $todos = Todo::where('title', 'like', '%' . $query . '%')->get();
+
+        return inertia(self::VIEW_DIR . 'Index', compact('todos'));
+    }
 }

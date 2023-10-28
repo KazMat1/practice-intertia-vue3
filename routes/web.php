@@ -27,8 +27,8 @@ Route::controller(TodoController::class)
         Route::get('', 'index')->name('index');
         Route::get('create', 'create')->name('create');
         Route::post('store', 'store')->name('store');
-        // Route::get('{query}', 'search')->where('query', '.*')->name('search');
+        Route::get('search/{query}', 'search')->where('query', '.*')->name('search');
         Route::get('edit', 'edit')->name('edit');
         Route::put('update', 'update')->name('update');
-        Route::delete('destroy', 'destroy')->name('destroy');
+        Route::delete('destroy/{todo}', 'destroy')->name('destroy');
 });

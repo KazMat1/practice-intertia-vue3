@@ -4,6 +4,8 @@
 
 // flex-box
 $flex: flex;
+$inline-flex: inline-flex;
+
 @mixin start($align: center, $direction: row, $wrap: nowrap) {
     display: $flex;
     justify-content: start;

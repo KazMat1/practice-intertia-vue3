@@ -2,12 +2,16 @@
 import { Link } from '@inertiajs/vue3';
 
 const props = defineProps({
-    link: String
+    url: String,
+    method: {
+        type: String,
+        default: 'get'
+    }
 })
 </script>
 
 <template>
-    <Link :href="link" class="icon-btn" :class="$attrs.class">
+    <Link :href="url" :method="method" as="button" class="icon-btn" :class="$attrs.class">
         <slot />
     </Link>
 </template>
@@ -16,6 +20,14 @@ const props = defineProps({
 @use '../../../../scss/global/mixin/_flex.scss' as flex;
 @use '../../../../scss/global/constants/variable' as var;
 
+button.icon-btn {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    outline: none;
+    padding: 0;
+    appearance: none;
+}
 .icon-btn {
     display: inline-block;
     width: 1.25em;

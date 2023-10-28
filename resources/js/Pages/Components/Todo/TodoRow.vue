@@ -5,7 +5,7 @@ import DeleteIcon from '@/Pages/Components/Icon/DeleteIcon.vue';
 import EditIcon from '@/Pages/Components/Icon/EditIcon.vue';
 
 // util的なメソッドをどこに置くかわからなかったので、ひとまずここに書いておく
-const format = 'MM/DD';
+const format = 'M/D';
 const dayjs = inject('dayjs');
 const formattedDate = ((date, format) => {
     return dayjs(date).format(format)
@@ -38,10 +38,10 @@ const checked = ref(props.is_completed ? true : false)
         <p class="todo-title">{{ title }}</p>
     </div>
     <div class="icon-btn-group">
-        <IconBtn :link="route('todos.edit')" class="icon-btn-edit">
+        <IconBtn :url="route('todos.edit')" class="icon-btn-edit">
             <EditIcon />
         </IconBtn>
-        <IconBtn :link="route('todos.destroy')" class="icon-btn-delete">
+        <IconBtn :url="route('todos.destroy', id)" method="delete" class="icon-btn-delete" preserve-scroll>
             <DeleteIcon />
         </IconBtn>
     </div>
