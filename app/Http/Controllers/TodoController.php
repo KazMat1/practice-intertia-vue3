@@ -63,8 +63,11 @@ class TodoController extends Controller
         return to_route('todos.index')->with($flash_message);
     }
 
-    public function search(string $query): Response
+    public function search(string $query = ''): Response
     {
+        if(!$query) {
+            $this->index();
+        }
         $todos = Todo::where('title', 'like', '%' . $query . '%')->get();
 
         return inertia(self::VIEW_DIR . 'Index', compact('todos'));
