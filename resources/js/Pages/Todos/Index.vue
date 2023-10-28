@@ -11,12 +11,12 @@ import FloatBtn from "@/Pages/Components/Button/FloatBtn.vue";
 import TodoRow from "@/Pages/Components/Todo/TodoRow.vue";
 import Heading from "@/Pages/Components/Heading.vue"
 import { computed, ref } from "vue";
-import { Link, usePage } from "@inertiajs/vue3";
+import { Link } from "@inertiajs/vue3";
+import FlashMsg from "@/Pages/Components/Flash/FlashMsg.vue"
 
 const props = defineProps({
     todos: Array,
 });
-const page = usePage();
 
 const query = ref('');
 // フロントで検索すると、削除時の挙動がおかしかったため、バックに投げて検索しておく
@@ -34,7 +34,7 @@ const todoCheckedNum = computed(() => {
 <template>
     <Heading text="Todo List" />
     <main class="container">
-        <div v-if="page.props.flash.message" class="flash flash-success">{{ page.props.flash.message }}<span>×</span></div>
+        <FlashMsg />
         <span>{{ todoCheckedNum + " / " + todoNum }}</span>
         <input type="text" name="query" v-model="query" />
         <Link as="button" method="get" :href="route('todos.search', {query: query})" preserve-state>検索</Link>
@@ -61,7 +61,6 @@ const todoCheckedNum = computed(() => {
                     :title="todo.title"
                     :due_date="todo.due_date"
                     :is_completed="todo.is_completed"
-                    @toggleChecked="updateChecked"
                 />
             </template>
             <template v-else>
@@ -79,14 +78,5 @@ const todoCheckedNum = computed(() => {
 }
 .icon-btn-group {
     @include flex.center();
-}
-.flash {
-    width: 100%;
-    padding: 1rem;
-    margin-bottom: 1rem;
-    @include flex.between();
-    &-success {
-        background-color: var.$green;
-    }
 }
 </style>
