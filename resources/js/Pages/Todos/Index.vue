@@ -25,7 +25,7 @@ const query = ref('');
 //     const lowerQuery = query.value.toLowerCase()
 //     return tmpTodos.value.filter(todo => todo.title.toLowerCase().includes(lowerQuery))
 // })
-const todoNum  = (props.todos.length)
+const todoNum  = computed(() => (props.todos.length))
 const todoCheckedNum = computed(() => {
     return props.todos.filter((todo) => todo.is_completed === 1).length
 })
