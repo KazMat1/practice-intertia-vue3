@@ -23,12 +23,19 @@ class TodoController extends Controller
         return inertia(self::VIEW_DIR . 'Create');
     }
 
-    public function store(StoreTodoRequest $request): RedirectResponse
+    public function store(Todo $todo, StoreTodoRequest $request): RedirectResponse
     {
-        // dd($request);
-        Todo::create($request->all());
+        $result = $todo->fill($request->all())->save();
+        if ($result) {
+            $status = 'success';
+            $message = '登録が完了しました';
+        } else {
+            $status = 'error';
+            $message = '登録に失敗しました。もう一度お試しください';
+        }
+        $flash_message = ['status' => $status, 'message' => $message];
 
-        return to_route('todos.index')->with('message', '追加しました');
+        return to_route('todos.index')->with($flash_message);
     }
 
     public function edit(): Response
@@ -44,12 +51,21 @@ class TodoController extends Controller
     public function destroy(Todo $todo): RedirectResponse
     {
         $result = $todo->delete();
-        $message = $result ? '削除しました' : '削除できませんでした。もう一度お試しください';
-        return to_route('todos.index')->with('message', $message);
+        if ($result) {
+            $status = 'success';
+            $message = '削除が完了しました';
+        } else {
+            $status = 'error';
+            $message = '削除に失敗しました。もう一度お試しください';
+        }
+        $flash_message = ['status' => $status, 'message' => $message];
+
+        return to_route('todos.index')->with($flash_message);
     }
+
     public function search(string $query): Response
     {
-        $todos = Todo::where('title', 'like', '%'.$query.'%')->get();
+        $todos = Todo::where('title', 'like', '%' . $query . '%')->get();
 
         return inertia(self::VIEW_DIR . 'Index', compact('todos'));
     }
