@@ -13,7 +13,6 @@ const countLength = computed(() => {
 const MAX_LENGTH = 20
 
 const submit = () => {
-    console.log('form is submitted');
     form.post(route('todos.store'))
 }
 const isOverLength = computed(() => {
@@ -38,11 +37,7 @@ const hasErrorDueDate = computed(() => {
     <main class="container">
         <form class="form" @submit.prevent="submit">
             <div class="form-group">
-                <!-- {{ dayjs(dayjs(new Date)).isSameOrAfter(dayjs(form.due_date)) }} -->
                 <br>
-                <!-- {{ `due_date: ${dayjs(form.due_date)}` }} -->
-                <!-- <br> -->
-                <!-- {{ `today: ${dayjs(new Date)}` }} -->
                 <label class="form-label" :class="{ 'text-red': hasErrorTitle}" for="title">タイトル</label>
                 <input type="text" class="form-item" :class="{ 'border-red': hasErrorTitle}" id="title" v-model="form.title">
                 <div class="form-sub-group" id="title-sub">

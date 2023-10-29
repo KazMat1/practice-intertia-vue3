@@ -3,9 +3,13 @@ import { Link, useForm } from '@inertiajs/vue3';
 import Heading from "@/Pages/Components/Heading.vue"
 import { computed, inject } from "vue"
 
+const props = defineProps({
+    todo: Object,
+});
+
 const form = useForm({
-    title: '',
-    due_date: '',
+    title: props.todo.title,
+    due_date: props.todo.due_date,
 })
 const countLength = computed(() => {
     return form.title.length ?? 0
@@ -13,8 +17,7 @@ const countLength = computed(() => {
 const MAX_LENGTH = 20
 
 const submit = () => {
-    console.log('form is submitted');
-    form.post(route('todos.store'))
+    form.put(route('todos.update', props.todo.id))
 }
 const isOverLength = computed(() => {
     return MAX_LENGTH < countLength.value
@@ -22,12 +25,6 @@ const isOverLength = computed(() => {
 const hasErrorTitle = computed(() => {
     return form.errors.title || isOverLength.value
 })
-// import がうまくできていない
-const dayjs = inject('dayjs');
-// import isSameOrAfter from "dayjs/plugin/isSameOrAfter"
-// const isSameOrAfterToday = computed(() => {
-//     return dayjs.isSameOrAfter(dayjs(form.due_date))
-// })
 const hasErrorDueDate = computed(() => {
     return form.errors.due_date
 })
@@ -38,11 +35,7 @@ const hasErrorDueDate = computed(() => {
     <main class="container">
         <form class="form" @submit.prevent="submit">
             <div class="form-group">
-                <!-- {{ dayjs(dayjs(new Date)).isSameOrAfter(dayjs(form.due_date)) }} -->
                 <br>
-                <!-- {{ `due_date: ${dayjs(form.due_date)}` }} -->
-                <!-- <br> -->
-                <!-- {{ `today: ${dayjs(new Date)}` }} -->
                 <label class="form-label" :class="{ 'text-red': hasErrorTitle}" for="title">タイトル</label>
                 <input type="text" class="form-item" :class="{ 'border-red': hasErrorTitle}" id="title" v-model="form.title">
                 <div class="form-sub-group" id="title-sub">
@@ -59,7 +52,7 @@ const hasErrorDueDate = computed(() => {
             </div>
             <div class="form-btn-group">
                 <Link as="button" class="btn btn-back" :href="route('todos.index')">戻る</Link>
-                <button type="submit" class="btn btn-submit" :disabled="form.processing" :class="{ 'cursor-not-allowed' : form.processing}">追加</button>
+                <button type="submit" class="btn btn-submit" :disabled="form.processing" :class="{ 'cursor-not-allowed' : form.processing}">編集</button>
             </div>
         </form>
     </main>

@@ -36,6 +36,4 @@ class SessionService
 
         return $flash_msg;
     }
-
-
 }
