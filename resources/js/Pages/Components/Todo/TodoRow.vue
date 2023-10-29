@@ -38,7 +38,7 @@ const checked = ref(props.is_completed ? true : false)
         <p class="todo-title">{{ title }}</p>
     </div>
     <div class="icon-btn-group">
-        <IconBtn :url="route('todos.edit')" class="icon-btn-edit">
+        <IconBtn :url="route('todos.edit', id)" class="icon-btn-edit">
             <EditIcon />
         </IconBtn>
         <IconBtn :url="route('todos.destroy', id)" method="delete" class="icon-btn-delete" preserve-scroll>
