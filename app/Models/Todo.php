@@ -15,6 +15,7 @@ class Todo extends Model
     protected $fillable = [
         'title',
         'due_date',
+        'is_completed'
     ];
 
     // protected function deadline(): Attribute
