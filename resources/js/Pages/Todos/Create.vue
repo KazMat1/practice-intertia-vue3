@@ -14,7 +14,7 @@ const submit = () => {
     form.post(route("todos.store"));
 };
 const isInvalidLength = computed(
-    () => MAX_LENGTH < countLength.value || countLength.value === 0
+    () => MAX_LENGTH < countLength.value
 );
 const hasErrorTitle = computed(
     () => form.errors.title || isInvalidLength.value
