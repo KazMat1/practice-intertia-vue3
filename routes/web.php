@@ -16,7 +16,7 @@ use Inertia\Inertia;
 */
 
 Route::get('/', function () {
-    return Inertia::render('hello-world');
+    return to_route('todos.index');
 })->name('top');
 
 Route::controller(TodoController::class)
