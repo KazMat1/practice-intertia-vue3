@@ -3,14 +3,7 @@ import { inject, ref } from 'vue';
 import IconBtn from '@/Pages/Components/Button/IconBtn.vue';
 import DeleteIcon from '@/Pages/Components/Icon/DeleteIcon.vue';
 import EditIcon from '@/Pages/Components/Icon/EditIcon.vue';
-
-// util的なメソッドをどこに置くかわからなかったので、ひとまずここに書いておく
-const format = 'M/D';
-const dayjs = inject('dayjs');
-const formattedDate = ((date, format) => {
-    return dayjs(date).format(format)
-});
-
+import { formattedDate } from '@/Util/DateUtil.vue'
 
 const props = defineProps({
     id: Number,
@@ -27,7 +20,7 @@ const checked = ref(props.is_completed ? true : false)
 //     emit('toggleChecked', props.id)
 //     // console.log(props.id, props.is_completed, checked)
 // }
-
+const format = 'M/D';
 const handleDelete = () => {
     alert('本当に削除しますか？')
 }
