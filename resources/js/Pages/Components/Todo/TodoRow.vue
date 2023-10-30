@@ -27,6 +27,10 @@ const checked = ref(props.is_completed ? true : false)
 //     emit('toggleChecked', props.id)
 //     // console.log(props.id, props.is_completed, checked)
 // }
+
+const handleDelete = () => {
+    alert('本当に削除しますか？')
+}
 </script>
 
 <template>
@@ -41,7 +45,7 @@ const checked = ref(props.is_completed ? true : false)
         <IconBtn :url="route('todos.edit', id)" class="icon-btn-edit">
             <EditIcon />
         </IconBtn>
-        <IconBtn :url="route('todos.destroy', id)" method="delete" class="icon-btn-delete" preserve-scroll>
+        <IconBtn @click="handleDelete" :url="route('todos.destroy', id)" method="delete" class="icon-btn-delete" preserve-scroll>
             <DeleteIcon />
         </IconBtn>
     </div>
