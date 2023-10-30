@@ -1,5 +1,12 @@
 ## Build a environment
 ```
+docker run --rm \
+    -u "$(id -u):$(id -g)" \
+    -v "$(pwd):/var/www/html" \
+    -w /var/www/html \
+    laravelsail/php81-composer:latest \
+    composer install --ignore-platform-reqs
+
 ./vendor/bin/sail up
 or
 ./vendor/bin/sail up -d
@@ -11,9 +18,9 @@ cp .env.example .env
 ## Install packages
 ```
 # php packages
-composer install
+./vendor/bin/sail composer install
 # js packages
-npm install
+./vendor/bin/sail npm install
 ```
 
 ## Create database and tables and Insert dummy data
@@ -24,9 +31,9 @@ npm install
 ## Run vite
 ```
 # run a dev server
-npm run dev
+./vendor/bin/sail npm run dev
 # build resoureces
-npm run build
+./vendor/bin/sail npm run build
 ```
 
 ## Link
