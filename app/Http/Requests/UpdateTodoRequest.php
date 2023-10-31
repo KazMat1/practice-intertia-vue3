@@ -3,15 +3,9 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use App\Http\Requests\StoreTodoRequest;
 
-class UpdateTodoRequest extends StoreTodoRequest
+class UpdateTodoRequest extends FormRequest
 {
-    /**
-     *  一旦、継承しているので、特に変更はしない。
-     * 変更が必要であれば、オーバーライド or 独自のメソッドを定義
-     */
-
     // /**
     //  * Get the validation rules that apply to the request.
     //  *
