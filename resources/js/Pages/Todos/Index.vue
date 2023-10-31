@@ -11,15 +11,15 @@ import FloatBtn from "@/Pages/Components/Button/FloatBtn.vue";
 import TodoRow from "@/Pages/Components/Todo/TodoRow.vue";
 import Heading from "@/Pages/Components/Heading.vue";
 import { computed, ref } from "vue";
-import { Link } from "@inertiajs/vue3";
+import { Link, useForm } from "@inertiajs/vue3";
 import FlashMsg from "@/Pages/Components/Flash/FlashMsg.vue";
 
 const props = defineProps({
     todos: Array,
 });
 
-const query = ref("");
 // フロントで検索すると、削除時の挙動がおかしかったため、バックに投げて検索しておく
+// const query = ref("");
 // const tmpTodos = ref(props.todos)
 // const filteredTodos = computed(() => {
 //     const lowerQuery = query.value.toLowerCase()
@@ -29,6 +29,19 @@ const todoNum = computed(() => props.todos.length);
 const todoCheckedNum = computed(
     () => props.todos.filter((todo) => todo.is_completed === 1).length
 );
+
+const searchForm = useForm({
+    query: "",
+})
+const submitSearchForm = () => {
+    const trimedQuery = searchForm.query.trim()
+    if(!trimedQuery) {
+        return;
+    }
+    searchForm.get(route('todos.search', {query: trimedQuery}), {
+        preserveState: true,
+    })
+}
 </script>
 
 <template>
@@ -36,17 +49,11 @@ const todoCheckedNum = computed(
     <main class="container">
         <FlashMsg />
         <span>{{ todoCheckedNum + " / " + todoNum }}</span>
-        <input type="text" name="query" v-model="query" />
-        <Link
-            as="button"
-            method="get"
-            :href="route('todos.search', { query: query })"
-            preserve-state
-            >検索</Link
-        >
-        <Link as="button" method="get" :href="route('todos.index')"
-            >リセット</Link
-        >
+        <form class="form-search" @submit.prevent="submitSearchForm">
+            <input type="text" name="query" v-model="searchForm.query" />
+            <button type="submit">検索</button>
+        </form>
+        <Link as="button" :href="route('todos.index')" >リセット</Link>
         <div class="todo">
             <!-- todo heading -->
             <div class="todo-item">
@@ -83,5 +90,8 @@ const todoCheckedNum = computed(
 }
 .icon-btn-group {
     @include flex.center();
+}
+.form-search {
+    display: inline-block;
 }
 </style>

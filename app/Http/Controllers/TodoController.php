@@ -9,6 +9,7 @@ use App\Models\Todo;
 use App\Http\Requests\StoreTodoRequest;
 use App\Http\Requests\UpdateTodoRequest;
 use App\Http\Helpers\SessionHelper;
+use Illuminate\Http\Request;
 
 class TodoController extends Controller
 {
@@ -57,12 +58,22 @@ class TodoController extends Controller
         return to_route('todos.index')->with($flash_msg);
     }
 
-    public function search(string $query = ''): Response
+    public function search(Request $request): Response
     {
+        $query = $request->query('query');
         if(!$query) {
             $this->index();
         }
-        $todos = Todo::where('title', 'like', '%' . $query . '%')->get();
+        $converted_query = mb_convert_kana($query, 's');
+        $splited_queries = preg_split('/[\s,]+/', $converted_query);
+
+        $todo_query = Todo::query();
+        foreach($splited_queries as $search_query) {
+            $todo_query->where(function ($todo_query) use($search_query) {
+                $todo_query->whereLike('title', $search_query);
+            });
+        }
+        $todos = $todo_query->get();
 
         return inertia(self::VIEW_DIR . 'Index', compact('todos'));
     }
