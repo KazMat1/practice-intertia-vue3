@@ -8,16 +8,11 @@ use Inertia\Response;
 use App\Models\Todo;
 use App\Http\Requests\StoreTodoRequest;
 use App\Http\Requests\UpdateTodoRequest;
-use App\Http\Services\SessionService;
+use App\Http\Helpers\SessionHelper;
 
 class TodoController extends Controller
 {
     private const VIEW_DIR = "Todos/";
-    private $session_service;
-
-    public function __construct(SessionService $session_service) {
-        $this->session_service = $session_service;
-    }
 
     public function index(): Response
     {
@@ -30,11 +25,11 @@ class TodoController extends Controller
         return inertia(self::VIEW_DIR . 'Create');
     }
 
-    public function store(Todo $todo, StoreTodoRequest $request): RedirectResponse
+    public function store(Todo $todo, StoreTodoRequest $request, SessionHelper $session_helper): RedirectResponse
     {
         $result = $todo->fill($request->all())->save();
         $level = $result ? 'success' : 'error';
-        $flash_msg = $this->session_service->getFlashMsg($level, '登録');
+        $flash_msg = $session_helper->getFlashMsg($level, '登録');
 
         return to_route('todos.index')->with($flash_msg);
     }
@@ -44,20 +39,20 @@ class TodoController extends Controller
         return inertia(self::VIEW_DIR . 'Edit', compact('todo'));
     }
 
-    public function update(Todo $todo, UpdateTodoRequest $request): RedirectResponse
+    public function update(Todo $todo, UpdateTodoRequest $request, SessionHelper $session_helper): RedirectResponse
     {
         $result = $todo->fill($request->all())->save();
         $level = $result ? 'success' : 'error';
-        $flash_msg = $this->session_service->getFlashMsg($level, '更新');
+        $flash_msg = $session_helper->getFlashMsg($level, '更新');
 
         return to_route('todos.index')->with($flash_msg);
     }
 
-    public function destroy(Todo $todo): RedirectResponse
+    public function destroy(Todo $todo, SessionHelper $session_helper): RedirectResponse
     {
         $result = $todo->delete();
         $level = $result ? 'success' : 'error';
-        $flash_msg = $this->session_service->getFlashMsg($level, '削除');
+        $flash_msg = $session_helper->getFlashMsg($level, '削除');
 
         return to_route('todos.index')->with($flash_msg);
     }

@@ -1,15 +1,15 @@
 <?php
 
-namespace App\Http\Services;
+namespace App\Http\Helpers;
 
 use Error;
 
-class SessionService
+class SessionHelper
 {
     private $flash_msg = [
         'success' => [
             'status' => 'success',
-            'message' => '完了しました',
+            'message' => '成功しました',
         ],
         'error' => [
             'status' => 'error',
@@ -31,7 +31,7 @@ class SessionService
         }
 
         $status = $this->flash_msg[$level]['status'];
-        $message = $action . 'が' . $this->flash_msg[$level]['message'];
+        $message = $action . 'に' . $this->flash_msg[$level]['message'];
         $flash_msg = ['status' => $status, 'message' => $message];
 
         return $flash_msg;
