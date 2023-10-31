@@ -1,9 +1,9 @@
 <script setup>
-import { inject, ref } from 'vue';
 import IconBtn from '@/Pages/Components/Button/IconBtn.vue';
 import DeleteIcon from '@/Pages/Components/Icon/DeleteIcon.vue';
 import EditIcon from '@/Pages/Components/Icon/EditIcon.vue';
 import { formattedDate } from '@/Util/DateUtil.vue'
+import { useForm } from '@inertiajs/vue3';
 
 const props = defineProps({
     id: Number,
@@ -11,15 +11,23 @@ const props = defineProps({
     due_date: String,
     is_completed: Number
 })
+const checkboxForm = useForm({
+    id: props.id,
+    title: props.title,
+    due_date: props.due_date,
+    is_completed: props.is_completed ? true : false
+})
+const submitCheckboxForm = (() => {
+    checkboxForm
+        .transform((data) => ({
+            ...data,
+            is_completed: data.is_completed ? 1 : 0,
+        }))
+        .put(route('todos.update', checkboxForm.id), {
+            preserveScroll: true,
+        });
+})
 
-const checked = ref(props.is_completed ? true : false)
-
-// const emit = defineEmits(['toggleChecked'])
-
-// const handleChange = () => {
-//     emit('toggleChecked', props.id)
-//     // console.log(props.id, props.is_completed, checked)
-// }
 const format = 'M/D';
 const handleDelete = () => {
     alert('本当に削除しますか？')
@@ -28,9 +36,11 @@ const handleDelete = () => {
 
 <template>
 <label :for="`todo-${id}`">
-<div class="todo-item" :class="{checked: checked}">
+<div class="todo-item" :class="{checked: checkboxForm.is_completed}">
     <div class="todo-item-group">
-        <input type="checkbox" name="todo" :id="`todo-${id}`" v-model="checked" @change="handleChange">
+        <form @change="submitCheckboxForm">
+            <input type="checkbox" name="todo" :id="`todo-${id}`" v-model="checkboxForm.is_completed">
+        </form>
         <p class="todo-due-date">{{ formattedDate(due_date, format) }}</p>
         <p class="todo-title">{{ title }}</p>
     </div>
